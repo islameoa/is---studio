@@ -7,9 +7,16 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+      if (!isScrolled) {
+        setMenuOpen(false);
+      }
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -19,13 +26,18 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar-container" onMouseMove={handleMouseMove}>
+    <div 
+      className="navbar-container" 
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
         <img src={scrolled ? logo : logoSmall} alt="Logo" className="navbar-logo" />
         <ul className={`nav-links-straight ${!scrolled ? 'show' : ''}`}>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
+          <li>Home,</li>
+          <li>About,</li>
+          <li>Contact,</li>
         </ul>
         <div className={`menu-icon ${scrolled ? 'show' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
           <img src={menuIcon} alt="Menu Icon" />
@@ -36,12 +48,12 @@ const Navbar = () => {
           <li>Contact</li>
         </ul>
         <div
-          className="white-circle"
+          className={`white-circle ${isHovering ? 'visible' : ''}`}
           style={{
             left: `${mousePosition.x}px`,
             top: `${mousePosition.y}px`,
           }}
-        ></div>
+        ></div> 
       </nav>
     </div>
   );
