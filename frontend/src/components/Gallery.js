@@ -1,33 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Gallery.css';
 import image1 from '../images/image1.jpg';
-import image2 from '../images/image1.jpg';
-import image3 from '../images/image1.jpg';
-import image4 from '../images/image1.jpg';
-import image5 from '../images/image1.jpg';
-import image6 from '../images/image1.jpg';
-import image7 from '../images/image1.jpg';
-import image8 from '../images/image1.jpg';
-import image9 from '../images/image1.jpg';
-import image10 from '../images/image1.jpg';
 import homeLogo from '../images/logo_biggest.png';
-const images = [
-  image1,
-  image2,
-  image3,
-  image4,
-  image5,
-  image6,
-  image7,
-  image8,
-  image9,
-  image10,
-];
+
+const images = [image1, image1, image1, image1, image1, image1, image1, image1, image1, image1, image1, image1, image1];
+const words = ['love', 'meaning', 'purpose'];
 
 const Gallery = () => {
+  const [currentWord, setCurrentWord] = useState('purpose');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prev) => words[(words.indexOf(prev) + 1) % words.length]);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="gallery-container">
-      <img src={homeLogo} alt="is-studio logo" className='logo'/>
+      <img src={homeLogo} alt="is-studio logo" className="logo" />
+      <p className="subtitle">
+        built with <span className="dynamic-word">{currentWord}</span>
+      </p>
       <div className="gallery">
         {images.map((image, index) => (
           <div key={index} className="gallery-item">

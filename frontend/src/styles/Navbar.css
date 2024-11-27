@@ -18,11 +18,15 @@
 .navbar-logo {
   height: 85px;
   width: auto;
-  transition: height 0.3s ease;
+  transition: transform 0.3s ease, height 0.3s ease; /* Smooth transition for scaling */
 }
 
 .navbar-scrolled .navbar-logo {
   height: 90px;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
 }
 
 .navbar-container {
@@ -33,10 +37,15 @@
   display: none;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: transform 0.3s ease, height 0.3s ease;
 }
 
 .menu-icon.show {
   display: block;
+}
+
+.menu-icon:active {
+  transform: scale(0.8);
 }
 
 .nav-links {
@@ -140,4 +149,19 @@ li {
   .nav-links {
     width: 100px;
   }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.nav-links-straight.animate {
+  animation: slideIn 1s ease-out;
 }
